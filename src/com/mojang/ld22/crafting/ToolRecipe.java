@@ -14,7 +14,26 @@ public class ToolRecipe extends Recipe {
 		this.level = level;
 	}
 
+	public void checkCanCraft(Player player) {
+		super.checkCanCraft(player);
+		if (player.inventory.hasToolBetterThan((ToolItem) resultTemplate)) {
+			canCraft = false;
+		} else if (player.activeItem instanceof ToolItem) {
+			ToolItem ti = (ToolItem) player.activeItem;
+			if (ti.type == type && ti.level >= level) {
+				canCraft = false;
+			}
+		}
+	}
+
 	public void craft(Player player) {
+		if (player.activeItem instanceof ToolItem) {
+			ToolItem ti = (ToolItem) player.activeItem;
+			if (ti.type == type) {
+				player.activeItem = new ToolItem(type, level);
+				return;
+			}
+		}
 		player.inventory.add(0, new ToolItem(type, level));
 	}
 }

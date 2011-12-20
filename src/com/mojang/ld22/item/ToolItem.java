@@ -79,4 +79,10 @@ public class ToolItem extends Item {
 		}
 		return false;
 	}
+
+	public void upgrade(ToolItem toTake) {
+		if (toTake.level > level) {
+			level = toTake.level;
+        }
+	}
 }

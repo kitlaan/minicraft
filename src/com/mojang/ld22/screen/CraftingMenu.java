@@ -71,6 +71,7 @@ public class CraftingMenu extends Menu {
 		if (recipes.size() > 0) {
 			Recipe recipe = recipes.get(selected);
 			int hasResultItems = player.inventory.count(recipe.resultTemplate);
+			if (player.activeItem != null && player.activeItem.matches(recipe.resultTemplate)) hasResultItems++;
 			int xo = 13 * 8;
 			screen.render(xo, 2 * 8, recipe.resultTemplate.getSprite(), recipe.resultTemplate.getColor(), 0);
 			Font.draw("" + hasResultItems, screen, xo + 8, 2 * 8, Color.get(-1, 555, 555, 555));

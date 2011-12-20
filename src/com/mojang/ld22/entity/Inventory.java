@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.ResourceItem;
+import com.mojang.ld22.item.ToolItem;
+import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.item.resource.Resource;
 
 public class Inventory {
@@ -23,9 +25,33 @@ public class Inventory {
 			} else {
 				has.count += toTake.count;
 			}
+		} else if (item instanceof ToolItem) {
+			ToolItem toTake = (ToolItem) item;
+			ToolItem has = findToolType(toTake.type);
+			if (has == null) {
+				items.add(slot, toTake);
+			} else {
+				has.upgrade(toTake);
+			}
 		} else {
 			items.add(slot, item);
 		}
+	}
+
+	private ToolItem findToolType(ToolType tool) {
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i) instanceof ToolItem) {
+				ToolItem has = (ToolItem) items.get(i);
+				if (has.type == tool) return has;
+			}
+		}
+		return null;
+	}
+
+	public boolean hasToolBetterThan(ToolItem tool) {
+		ToolItem ti = findToolType(tool.type);
+		if (ti == null) return false;
+		return ti.level >= tool.level;
 	}
 
 	private ResourceItem findResource(Resource resource) {
