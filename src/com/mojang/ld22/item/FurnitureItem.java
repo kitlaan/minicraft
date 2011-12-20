@@ -34,6 +34,14 @@ public class FurnitureItem extends Item {
 		Font.draw(furniture.name, screen, x + 8, y, Color.get(-1, 555, 555, 555));
 	}
 
+	public boolean matches(Item item) {
+		if (item instanceof FurnitureItem) {
+			FurnitureItem fi = (FurnitureItem) item;
+			return fi.furniture.getClass() == furniture.getClass();
+		}
+		return false;
+	}
+
 	public void onTake(ItemEntity itemEntity) {
 	}
 
