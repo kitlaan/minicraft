@@ -11,10 +11,10 @@ import com.mojang.ld22.gfx.Screen;
 public class ToolItem extends Item {
 	private Random random = new Random();
 
-	public static final int MAX_LEVEL = 5;
 	public static final String[] LEVEL_NAMES = { //
 	"Wood", "Rock", "Iron", "Gold", "Gem"//
 	};
+	public static final int MAX_LEVEL = LEVEL_NAMES.length - 1;
 
 	public static final int[] LEVEL_COLORS = {//
 	Color.get(-1, 100, 321, 431),//
@@ -28,6 +28,8 @@ public class ToolItem extends Item {
 	public int level = 0;
 
 	public ToolItem(ToolType type, int level) {
+		if (level > MAX_LEVEL) level = MAX_LEVEL;
+
 		this.type = type;
 		this.level = level;
 	}
