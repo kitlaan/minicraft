@@ -1,6 +1,7 @@
 package com.mojang.ld22.entity;
 
 import java.util.List;
+import java.util.Iterator;
 
 import com.mojang.ld22.Game;
 import com.mojang.ld22.InputHandler;
@@ -357,6 +358,14 @@ public class Player extends Mob {
 		if (activeItem != null) {
 			if (activeItem instanceof FurnitureItem) {
 				int rr = ((FurnitureItem) activeItem).furniture.getLightRadius();
+				if (rr > r) r = rr;
+			}
+		}
+		Iterator e = inventory.items.iterator();
+		while (e.hasNext()) {
+			Item i = (Item) e.next();
+			if (i instanceof FurnitureItem) {
+				int rr = ((FurnitureItem) i).furniture.getLightRadius() / 2;
 				if (rr > r) r = rr;
 			}
 		}
